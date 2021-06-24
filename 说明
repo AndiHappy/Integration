@@ -1,0 +1,11 @@
+MongoDB
+cd /usr/local/opt/mongodb-community@4.2/bin
+
+To have launchd start mongodb/brew/mongodb-community@4.2 now and restart at login:
+  brew services start mongodb/brew/mongodb-community@4.2
+Or, if you don't want/need a background service you can just run:
+  mongod --config /usr/local/etc/mongod.conf
+
+plan:
+支持http，dubbo，method 标志位的顺序的配置开发
+支持合并的接口

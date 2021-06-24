@@ -43,6 +43,22 @@
 			<version>1.18.20</version>
 		</dependency>
 
+
+		<!-- 调用httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.13</version>
+		</dependency>
+
+		<!-- 操作json数据 -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20210307</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
