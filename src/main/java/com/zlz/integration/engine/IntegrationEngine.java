@@ -53,7 +53,7 @@ public class IntegrationEngine {
 
         JsoupStep jsoupStep = new JsoupStep();
         jsoupStep.setStepId("jsoupStep");
-        jsoupStep.addInputPara(Constants.JSOUP_SELECTOR,"table#at a");
+        jsoupStep.addInputPara("JsoupSelector","#at > tbody > tr:nth-child(1) > td");
 
         steps[0] =list;
         steps[1] = jsoupStep;

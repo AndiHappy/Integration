@@ -5,14 +5,13 @@ import com.zlz.integration.aggregation_gateway.AbstractExecuteStep;
 import com.zlz.integration.aggregation_gateway.ExecuteStep;
 import com.zlz.integration.engine.EngineContext;
 import com.zlz.integration.engine.EngineResult;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.jsoup.select.Evaluator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class JsoupStep extends AbstractExecuteStep {
 
@@ -34,8 +33,5 @@ public class JsoupStep extends AbstractExecuteStep {
 
         return EngineResult.INI;
     }
-
-
-
 
 }
