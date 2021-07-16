@@ -1,0 +1,32 @@
+class Solution {
+    public String minWindow(String s, String t) {
+      	if(s.isEmpty() || t.isEmpty()) return "";
+    Map<Character, Integer> need = new HashMap<>();
+    t.chars().forEach(e->need.put((char)e, need.getOrDefault((char)e, 0) + 1));
+    int i = 0, j = 0, l = 0, r = 0, missing = t.length();
+    while(r < s.length()){
+        char right = s.charAt(r);
+        need.putIfAbsent(right, -1);
+        // 这个判定的条件非常的厉害：维护窗口的滑动的条件
+        if(need.get(right) > 0) {
+        	missing -= 1;
+        }
+        need.put(right, need.get(right) - 1);
+        r += 1;
+        while(missing == 0){//窗口的维护，尽量的找到
+            if(j == 0 || (r - l) < (j - i)){
+                j = r;
+                i = l;
+            }
+            char left = s.charAt(l);
+            need.putIfAbsent(left, -1);
+            need.put(left, need.get(left) + 1);
+            if(need.get(left) > 0) missing += 1;
+            l += 1;
+        }
+    }
+    return s.substring(i, j);  
+    }
+}
+//runtime:52 ms
+//memory:37.4 MB
