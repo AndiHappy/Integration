@@ -53,7 +53,38 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public String minWindow(String s, String t) {
-        
+        if(s.isEmpty() || t.isEmpty()) return "";
+        Map<Character, Integer> window = new HashMap<>();
+        t.chars().forEach(e->window.put((char)e, window.getOrDefault((char)e, 0) + 1));
+
+        //i，j 为维护的窗口大小，每次的missing==0的时候，会销去可以消去的部分，保留一个最小的Window
+        int i = 0, j = 0, l = 0, r = 0, missing = t.length();
+        while(r < s.length()){
+            char right = s.charAt(r);
+            window.putIfAbsent(right, -1);
+            // 这个判定的条件非常的厉害：维护窗口的滑动的条件
+            if(window.get(right) > 0) {
+                missing -= 1;
+            }
+            window.put(right, window.get(right) - 1);
+            r += 1;
+
+
+            while(missing == 0){
+                if(j == 0 || (r - l) < (j - i)){
+                    j = r;
+                    i = l;
+                }
+
+                //消掉前面不合适的部分
+                char left = s.charAt(l);
+                window.putIfAbsent(left, -1);
+                window.put(left, window.get(left) + 1);
+                if(window.get(left) > 0) missing += 1;
+                l += 1;
+            }
+        }
+        return s.substring(i, j);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

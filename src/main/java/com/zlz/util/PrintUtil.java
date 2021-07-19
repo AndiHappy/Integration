@@ -39,6 +39,27 @@ public class PrintUtil {
         return a;
     }
 
+
+    public static char[][] costructCharArray(String s) {
+        s= s.replaceAll("\"","");
+        String[] spit = s.split("],");
+        List<List<Character>> result = new ArrayList<>();
+        for (int i = 0; i < spit.length; i++) {
+            String array = spit[i].replace("[","").replace("]","");
+            String[] arrayElemet = array.split(",");
+            ArrayList<Character> arrayTmp = new ArrayList<>();
+            for (String e : arrayElemet) arrayTmp.add(e.charAt(0));
+            result.add(arrayTmp);
+        }
+        char[][] a = new char[result.size()][result.get(0).size()];
+        for (int i = 0; i < result.size(); i++) {
+            for (int j = 0; j < result.get(i).size(); j++) {
+                a[i][j]=result.get(i).get(j);
+            }
+        }
+        return a;
+    }
+
     public static <T> void p(T[] words, int left, int right, String spit) {
         for (int i = left; i <= right ; i++) {
             String value = words[i].toString() + (spit!=null?spit:"");
@@ -46,7 +67,6 @@ public class PrintUtil {
         }
         System.out.println();
     }
-
 
     private enum Level {
         SOIUT("consoult");
