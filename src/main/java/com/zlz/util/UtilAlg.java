@@ -6,6 +6,48 @@ public class UtilAlg {
 
     public static void main(String[] args) {
         System.out.println("keep Happy boy");
+        System.out.println(restoreIpAddresses("25525511135"));
+    }
+
+    public static List<String> restoreIpAddresses(String input){
+        List<String> result = new ArrayList<>();
+        backtracking(input,0,result,new StringBuilder(),0);
+        return result;
+    }
+
+    private static void backtracking(String input, int i, List<String> result, StringBuilder stringBuilder,int index) {
+        if(index > 5) return;
+        if(i > input.length() && index < 4) return;
+        if(i == input.length() && index == 4){
+            result.add(stringBuilder.toString().substring(0,stringBuilder.toString().length()-1));
+        }
+
+        for (int k = 1; k < 4; k++) {
+            if(i+k > input.length()) return;
+            String value = input.substring(i,i+k);
+            if(validate(value,i)){
+                stringBuilder.append(value);
+                stringBuilder.append(".");
+                backtracking(input,i+k,result,stringBuilder,index+1);
+                int length = stringBuilder.length();
+                stringBuilder.delete(length-value.length()-1,length);
+            }else {
+                return;
+            }
+        }
+    }
+
+    private static boolean validate(String value,int index) {
+        if(index == 0 && value.startsWith("0")) return false;
+        Integer v = Integer.parseInt(value);
+        if(v < 0 || v > 255) return false;
+        return true;
+    }
+
+
+
+    public static void test_subsetsWithDup(String[] args) {
+        System.out.println("keep Happy boy");
         System.out.println(subsetsWithDup(new int[]{1,2,3}));
         System.out.println(subsetsWithDup(new int[]{1,2,2}));
     }
