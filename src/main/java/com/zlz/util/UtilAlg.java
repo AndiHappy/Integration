@@ -4,7 +4,106 @@ import java.util.*;
 
 public class UtilAlg {
 
+
+
+
+
     public static void main(String[] args) {
+        System.out.println("keep Happy boy");
+        PrintUtil.pLine();
+        System.out.println(getHint("1098","4509"));
+    }
+
+
+    public static String getHint(String secret, String guess) {
+        int len = secret.length();
+        int[] secretarr = new int[10];
+        int[] guessarr = new int[10];
+        int bull = 0, cow = 0;
+        for (int i = 0; i < len; ++i) {
+            if (secret.charAt(i) == guess.charAt(i)) {
+                ++bull;
+            } else {
+                ++secretarr[secret.charAt(i) - '0'];
+                ++guessarr[guess.charAt(i) - '0'];
+            }
+        }
+        for (int i = 0; i < 10; ++i) {
+            cow += Math.min(secretarr[i], guessarr[i]);
+        }
+        return "" + bull + "A" + cow + "B";
+    }
+
+    public static int findPositionToReplace(int[] a, int low, int high, int x) {
+        int mid;
+        while (low <= high) {
+            mid = low + (high - low) / 2;
+            if (a[mid] == x)
+                return mid;
+            else if (a[mid] > x)
+                high = mid - 1;
+            else
+                low = mid + 1;
+        }
+        return low;
+    }
+
+    public static int lengthOfLIS(int[] nums) {
+        if (nums == null | nums.length == 0)
+            return 0;
+        int n = nums.length, len = 0;
+
+        int[] increasingSequence = new int[n];
+        increasingSequence[len++] = nums[0];
+
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > increasingSequence[len - 1])
+                increasingSequence[len++] = nums[i];
+            else {
+                int position = findPositionToReplace(increasingSequence, 0, len - 1, nums[i]);
+                increasingSequence[position] = nums[i];
+            }
+        }
+        return len;
+    }
+
+    public static int lengthOfLIS1(int[] nums) {
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp,1);
+        int result1 = solve(nums, 0, Integer.MIN_VALUE);
+        int result2 = solve(nums,dp);
+        if(result1 != result2){
+            System.out.println(result1 + " " + result2);
+        }
+        return result1;
+    }
+
+    private static int solve(int[] nums, int[] dp) {
+        int ans = 1, n = nums.length;
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < i; j++)
+                if(nums[i] > nums[j]){
+                    dp[i] =Math.max(dp[i], dp[j] + 1);
+                    ans = Math.max(ans, dp[i]);
+                }
+
+        return ans;
+    }
+
+    public static int solve(int[] nums,int i,int prev){
+        if(i >= nums.length) return 0;
+        int take = 0, dontTake = solve(nums, i + 1, prev);           // try skipping the current element
+        if(nums[i] > prev) take = 1 + solve(nums, i + 1, nums[i]);   // or pick it if it is greater than previous picked element
+        int result =  Math.max(take, dontTake);                                  // return whichever choice gives max LIS
+        System.out.println("i: "+ i+" lengmin: "+ result);
+        return result;
+    }
+
+
+
+
+
+    public static void test_restoreIpAddresses(String[] args) {
         System.out.println("keep Happy boy");
         System.out.println(restoreIpAddresses("25525511135"));
     }

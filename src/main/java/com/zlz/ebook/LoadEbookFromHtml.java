@@ -19,9 +19,12 @@ public class LoadEbookFromHtml {
     public static void main(String[] args) throws IOException {
 
         System.out.println("keep Happy boy");
-        String url = "https://www.zwydw.com/book/69/69994/";
+        String url = "https://www.xbiquge.la/35/35091/";
         UrlSetting setting = FileUtil.instance().getProperties(new URL(url).getHost());
-        if(setting == null) return;
+        if(setting == null){
+            // 默认的情况下的选择
+            setting = new DefaultUrlSetting();
+        }
 
         String object = new JSONObject(setting).toString();
         System.out.println(object);
@@ -41,7 +44,7 @@ public class LoadEbookFromHtml {
             for (Element e :
                     elements) {
                 String pageUrl = e.absUrl("href");
-                PageHtml p = new PageHtml(pageUrl);
+                PageHtml p = new PageHtml(pageUrl,false);
                 p.setPageTitle(e.text());
                 pages.add(p);
             }
@@ -57,6 +60,7 @@ public class LoadEbookFromHtml {
 
         for (int i = 0; i < pages.size(); i++) {
             PageHtml contentPage = pages.get(i);
+            contentPage.loadURL();
             LoadConditionPoolUtil.waitLoadDoc(contentPage, 100);
             String pageTitle = contentPage.getPageTitle();
             System.out.println(pageTitle);
@@ -65,7 +69,6 @@ public class LoadEbookFromHtml {
             FileUtils.write(file, "\n\n", "UTF-8", true);
             Document pageDoc = contentPage.getDoc();
             Elements pageContent = pageDoc.select(setting.getContentSelect());
-
             String content = pageContent.text();
             System.out.println(content);
 
