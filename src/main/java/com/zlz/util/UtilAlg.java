@@ -10,7 +10,7 @@ public class UtilAlg {
     }
 
     public static List<String> restoreIpAddresses(String input){
-        List<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<String>();
         backtracking(input,0,result,new StringBuilder(),0);
         return result;
     }
