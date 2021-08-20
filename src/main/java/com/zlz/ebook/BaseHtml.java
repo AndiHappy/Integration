@@ -61,6 +61,11 @@ public class BaseHtml implements LoadCondition {
 
     }
 
+    public void clear() {
+        this.setDoc(null);
+        this.ini=false;
+    }
+
     public  void loadURL() {
         LoadConditionPoolUtil.submit(new Runnable() {
             @Override

@@ -36,7 +36,7 @@ public class Chrome {
 
 		ChromeDriver driver = new ChromeDriver(options);
 
-		driver.get("https://www.yanqbook.com/5/5030/1507093.html");
+		driver.get("https://www.yanqbook.com/5/5030/");
 
 
 		// 首先是拿到content
