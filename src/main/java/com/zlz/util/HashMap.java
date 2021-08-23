@@ -118,6 +118,12 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     public static void main(String[] args) {
         System.out.println("keep Happy boy");
         System.out.println(1 << 30);
+        HashMap<String,Integer> hashMap = new HashMap<>();
+        System.out.println(hashMap.modCount);
+        System.out.println(hashMap.size);
+        System.out.println(hashMap.threshold);
+        System.out.println(hashMap.loadFactor);
+
     }
 
     private static final long serialVersionUID = 362498820763181265L;
