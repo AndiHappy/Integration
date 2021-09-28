@@ -1,15 +1,123 @@
 package com.zlz.util;
 
+import java.nio.channels.Pipe;
 import java.util.*;
 
 //
 public class BackTracking {
     public static void main(String[] args) {
-        System.out.println("keep Happy boy");
+        System.out.println(isUgly(6));
+        System.out.println(isUgly(8));
+        System.out.println(isUgly(14));
+    }
 
-        PrintUtil.p(numSquares(12));
-        PrintUtil.p(numSquares(13));
-        PrintUtil.p(numSquares2(13));
+    public int singleNumber(int[] nums) {
+        int result = 0;
+        for (int i = 0; i < nums.length; i++) {
+            result ^=nums[i];
+        }
+        return result;
+
+    }
+
+    // 链表 1×2, 2×2, 3×2, 4×2, 5×2, …
+    // 链表 1×3, 2×3, 3×3, 4×3, 5×3, …
+    // 链表 1×5, 2×5, 3×5, 4×5, 5×5, …
+    // 类似于遍历这三个链表的样式
+    public int nthUglyNumber4(int n) {
+        int[] ugly = new int[n];
+        ugly[0] = 1;
+
+        int index2 = 0, index3 = 0, index5 = 0;
+        int factor2 = 2, factor3 = 3, factor5 = 5;
+
+        for(int i=1;i<n;i++){
+            int min = Math.min(Math.min(factor2,factor3),factor5);
+            ugly[i] = min;
+            if(factor2 == min)
+                factor2 = 2*ugly[++index2];
+            if(factor3 == min)
+                factor3 = 3*ugly[++index3];
+            if(factor5 == min)
+                factor5 = 5*ugly[++index5];
+        }
+        return ugly[n-1];
+    }
+
+    /**
+     * dp 思想
+     (1) 1×2, 2×2, 3×2, 4×2, 5×2, …
+     (2) 1×3, 2×3, 3×3, 4×3, 5×3, …
+     (3) 1×5, 2×5, 3×5, 4×5, 5×5, …
+
+     ** We can find that every subsequence is the ugly-sequence itself (1, 2, 3, 4, 5, …) multiply 2, 3, 5.**
+     * this is the key point of the problem
+
+     Then we use similar merge method as merge sort, to get every ugly number from the three subsequence.
+
+     Every step we choose the smallest one, and move one step after,including nums with same value.
+
+
+     * */
+
+    public int nthUglyNumber2(int n) {
+        int i = 0, j = 0, k = 0, p = 1;
+
+        int[] dp = new int[n];
+        dp[0] = 1;
+
+        while (p < n) {
+            dp[p] = Math.min(dp[i] * 2, Math.min(dp[j] * 3, dp[k] * 5));
+            if (dp[p] == dp[i] * 2) i++;
+            if (dp[p] == dp[j] * 3) j++;
+            if (dp[p] == dp[k] * 5) k++;
+            p++;
+        }
+
+        return dp[n - 1];
+    }
+
+    public int nthUglyNumber(int n) {
+        int[] ugly = new int[n];
+        ugly[0] = 1;
+
+        int index2 = 0, index3 = 0, index5 = 0;
+        int factor2 = 2, factor3 = 3, factor5 = 5;
+
+        for(int i=1;i<n;i++){
+            int min = Math.min(Math.min(factor2,factor3),factor5);
+            ugly[i] = min;
+            if(factor2 == min)
+                factor2 = 2*ugly[++index2];
+            if(factor3 == min)
+                factor3 = 3*ugly[++index3];
+            if(factor5 == min)
+                factor5 = 5*ugly[++index5];
+        }
+        return ugly[n-1];
+    }
+
+    public static boolean isUgly(int n) {
+        if(n == 1) return true;
+        while ( n != 1 && n %2 == 0){
+            n = n /2;
+        }
+        while ( n != 1 && n %3 == 0){
+            n = n /3;
+        }
+        while ( n != 1 && n %5 == 0){
+            n = n /5;
+        }
+        return n == 1;
+    }
+
+    public static  int hIndex(int[] citations) {
+        Arrays.sort(citations);
+        PrintUtil.p(citations);
+        for(int i=0;i< citations.length;i++){
+            if(citations[i] >= i) return i+1;
+        }
+        return 0;
     }
 
     /**
