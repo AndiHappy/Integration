@@ -38,6 +38,67 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
+
+        <!-- 模板引擎 Thymeleaf 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+<!--        		mongoDB-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+        <!--        spring 事务功能-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+
+        <!--   jdbc：
+                JDBC是一种用于执行SQL语句的API，可以为多种关系数据库提供统一访问，它是由一组用Java语言编写的类和接口。是Java访问数据库的标准规范。
+            spring-starter-data-jdbc：
+                主要提供了三个功能，第一个就是对数据源的装配，第二个就是提供一个JdbcTemplate简化使用，第三个就是事务
+            -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+
+    <!--
+        1. JDBC是所有数据库通过java技术连接的规范，任何数据库厂商都需要通过JDBC中封装的一套接口进行实现。
+        2.mysql-connector-java相关jar包，则是在JDBC官方jar基础上进行的实现和开发。
+        如果你的项目使用的是java+mysql进行的， 那么导入JDBC+mysql-connector-java两个jar.
+        如果你用的PHP那么肯定不可以使用mysql-connector-java相关jar包，那么需要的是mysql针对PHP技术进行的jar包封装了。
+        -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.19</version>
+        </dependency>
+
+        <!--        数据库连接池-->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+
+
+
+
+        <!-- druid 监控数据库 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.15</version>
+        </dependency>
+
+
+<!--        spring over -->
+
         <!-- 调用httpclient -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -52,11 +113,6 @@
             <version>20210307</version>
         </dependency>
 
-        <!-- 模板引擎 Thymeleaf 依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
 
 
         <!--		lombok-->
@@ -67,11 +123,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--		mongoDB-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
+
 
         <!-- html的解析 -->
         <dependency>
@@ -87,6 +139,18 @@
             <version>2.6</version>
         </dependency>
 
+
+
+
+
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
