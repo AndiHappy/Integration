@@ -12,4 +12,8 @@ public class PageHtml extends BaseHtml {
     public PageHtml(String url) {
         super(url);
     }
+
+    public PageHtml(String url,boolean load) {
+        super(url,load);
+    }
 }

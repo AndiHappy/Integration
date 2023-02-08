@@ -48,16 +48,25 @@ public class BaseHtml implements LoadCondition {
     private Random random = new Random();
 
     public BaseHtml(String url) {
-        ini(url);
+        ini(url,true);
     }
 
-    protected void ini(String url) {
+    public BaseHtml(String url,boolean load) {
+        ini(url,load);
+    }
+
+    protected void ini(String url,boolean load) {
         setUrl(url);
-        //默认加载页面
-        loadURL();
+        if(load) loadURL();    //默认加载页面
+
     }
 
-    private void loadURL() {
+    public void clear() {
+        this.setDoc(null);
+        this.ini=false;
+    }
+
+    public  void loadURL() {
         LoadConditionPoolUtil.submit(new Runnable() {
             @Override
             public void run() {

@@ -102,6 +102,12 @@ public class PrintUtil {
         }
     }
 
+    /**
+     * 构建输入的数组
+     * @param max 数组最大值
+     * @param leng 数组的长度 the length of array
+     * @param same 是否可以包含相同的元素
+     * */
     public static int[] constractArray(int max,int leng,boolean same){
         int[] result = new int[leng];
         int i = 0;

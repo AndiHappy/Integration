@@ -2,6 +2,7 @@ package com.zlz.ebook;
 
 import com.zlz.integration.Util.Constants;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,9 +20,12 @@ public class LoadEbookFromHtml {
     public static void main(String[] args) throws IOException {
 
         System.out.println("keep Happy boy");
-        String url = "https://www.biquge5200.cc/1_1224/";
+        String url = "https://www.biqugee.com/book/47967/";
         UrlSetting setting = FileUtil.instance().getProperties(new URL(url).getHost());
-        if(setting == null) return;
+        if(setting == null){
+            // 默认的情况下的选择
+            setting = new DefaultUrlSetting();
+        }
 
         String object = new JSONObject(setting).toString();
         System.out.println(object);
@@ -41,7 +45,7 @@ public class LoadEbookFromHtml {
             for (Element e :
                     elements) {
                 String pageUrl = e.absUrl("href");
-                PageHtml p = new PageHtml(pageUrl);
+                PageHtml p = new PageHtml(pageUrl,false);
                 p.setPageTitle(e.text());
                 pages.add(p);
             }
@@ -56,19 +60,30 @@ public class LoadEbookFromHtml {
 
 
         for (int i = 0; i < pages.size(); i++) {
-            PageHtml contentPage = pages.get(i);
-            LoadConditionPoolUtil.waitLoadDoc(contentPage, 100);
-            String pageTitle = contentPage.getPageTitle();
-            System.out.println(pageTitle);
-            FileUtils.write(file, pageTitle, "UTF-8", true);
 
-            Document pageDoc = contentPage.getDoc();
-            Elements pageContent = pageDoc.select(setting.getContentSelect());
+            boolean loadFlag = true;
+            while(loadFlag){
+                PageHtml contentPage = pages.get(i);
+                contentPage.loadURL();
+                LoadConditionPoolUtil.waitLoadDoc(contentPage, 100);
+                String pageTitle = contentPage.getPageTitle();
+                System.out.println(pageTitle);
+                FileUtils.write(file, "\n\n", "UTF-8", true);
+                FileUtils.write(file, pageTitle, "UTF-8", true);
+                FileUtils.write(file, "\n\n", "UTF-8", true);
+                Document pageDoc = contentPage.getDoc();
+                Elements pageContent = pageDoc.select(setting.getContentSelect());
+                String content = pageContent.text();
+                if(StringUtils.isNotBlank(content)){
+                    System.out.println(content);
+                    FileUtils.write(file, "\n\n", "UTF-8", true);
+                    FileUtils.write(file, content, "UTF-8", true);
+                    loadFlag=false;
+                }else{
+                    contentPage.clear();
+                }
+            }
 
-            String content = pageContent.text();
-            System.out.println(content);
-
-            FileUtils.write(file, content, "UTF-8", true);
         }
     }
 }
