@@ -86,9 +86,6 @@
             <version>5.0.1</version>
         </dependency>
 
-
-
-
         <!-- druid 监控数据库 -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -139,10 +136,29 @@
             <version>2.6</version>
         </dependency>
 
-
-
-
-
+        <!-- Zookeeper Client  -->
+        <!-- Curator是Netflix开源的一套ZooKeeper客户端框架. Netflix在使用ZooKeeper的过程中发现ZooKeeper自带的客户端太底层,
+        应用方在使用的时候需要自己处理很多事情, 于是在它的基础上包装了一下, 提供了一套更好用的客户端框架
+        org.apache.curator	curator-recipes	All of the recipes. Note: this artifact has dependencies on client and framework and, so, Maven (or whatever tool you're using) should pull those in automatically.
+        org.apache.curator	curator-async	Asynchronous DSL with O/R modeling, migrations and many other features.
+        org.apache.curator	curator-framework	The Curator Framework high level API. This is built on top of the client and should pull it in automatically.
+        org.apache.curator	curator-client	The Curator Client - replacement for the ZooKeeper class in the ZK distribution.
+        org.apache.curator	curator-test	Contains the TestingServer, the TestingCluster and a few other tools useful for testing.
+        org.apache.curator	curator-examples	Example usages of various Curator features.
+        org.apache.curator	curator-x-discovery	A Service Discovery implementation built on the Curator Framework.
+        org.apache.curator	curator-x-discovery-server	A RESTful server that can be used with Curator Discovery.
+        -->
+        <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>5.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-client</artifactId>
+            <version>5.4.0</version>
+        </dependency>
 
 
         <dependency>
@@ -150,6 +166,15 @@
             <artifactId>junit</artifactId>
             <version>4.13</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
         </dependency>
 
     </dependencies>
